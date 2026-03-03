@@ -10,18 +10,16 @@ import jakarta.persistence.Id;
 public class ClienteModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private int id;
+    private Integer id;
     private String nome;
-    private String cpf;
+    private String telefone;
 
 
-    //------------------gettes and setters---------------------->>>
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -33,11 +31,14 @@ public class ClienteModel {
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
+
 }
+
+
