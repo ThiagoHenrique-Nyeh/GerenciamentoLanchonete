@@ -21,6 +21,9 @@ public class Personalizacaoitem {
 
     private BigDecimal preco_adicional;
 
+
+
+
     public Long getId() {
         return id;
     }

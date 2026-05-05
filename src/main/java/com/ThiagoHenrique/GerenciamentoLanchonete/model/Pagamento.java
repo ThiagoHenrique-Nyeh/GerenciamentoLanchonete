@@ -15,12 +15,26 @@ public class Pagamento {
 @OneToOne
 @JoinColumn (name = "pedido_id", nullable = true )
     private Pedido pedido;
+
+    @Column(nullable = false)
     private String tipoPagamento;
+
+    @Column(nullable = false)
     private String status;
+
+    @Column(nullable = false)
     private BigDecimal troco;
+
+    @Column(nullable = false)
     private boolean pagamentoEntrega;
+
+    @Column(nullable = false)
     private boolean pagamentoLocal;
+
+    @Column(nullable = false)
     private LocalDateTime dataHoraPedido;
+
+
 
     public Long getId() {
         return id;

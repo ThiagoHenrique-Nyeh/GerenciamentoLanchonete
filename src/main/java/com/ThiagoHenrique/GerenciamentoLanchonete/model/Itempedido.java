@@ -19,8 +19,13 @@ public class Itempedido {
     @JoinColumn (name = "produto_id", nullable = false)
     private Produto produto;
 
-   private Integer quantidade;
-   private BigDecimal valorunidade;
+    @Column(nullable = false)
+    private Integer quantidade;
+
+    @Column(nullable = false)
+    private BigDecimal valorunidade;
+
+
 
     public Long getId() {
         return id;

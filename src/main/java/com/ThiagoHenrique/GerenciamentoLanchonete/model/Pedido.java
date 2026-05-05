@@ -16,10 +16,21 @@ public class Pedido {
     @JoinColumn (name = "cliente_id", nullable = false)
     Cliente cliente;
 
+    @Column(nullable = false)
     private LocalDateTime data_hora_pedido;
+
+    @Column(nullable = false)
     private BigDecimal valorTotal;
+
+    @Column(nullable = false)
     private String tipoEntrega;
+
+    @Column(nullable = false)
     private String statusEntrega;
+
+
+
+
     public Long getId() {
         return id;
     }
