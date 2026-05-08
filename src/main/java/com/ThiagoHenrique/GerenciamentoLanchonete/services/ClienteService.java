@@ -22,9 +22,20 @@ public class ClienteService {
     }
 
 
-
     public List<Cliente> listarTudo(){
-      return  clienteRepository.findAll();
+        return clienteRepository.findAll();
+    }
+
+
+    public Cliente buscaId(Long id){
+       return clienteRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("CLIENTE DE ID:"+id+ "NAO FOI ENCONTRADO :( "));
+    }
+
+
+    public void deletar(Long id){
+     Cliente cliente = buscaId(id);
+     clienteRepository.delete(cliente);
     }
 
 }
