@@ -15,14 +15,12 @@ public class Personalizacaoitem {
     @JoinColumn (name = "itempedido_id", nullable = false)
     private Itempedido itempedido;
 
-    private String acao;
+    private Integer quantidade;
 
     private String detalhe;
 
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal preco_adicional;
-
-
-
 
     public Long getId() {
         return id;
@@ -40,12 +38,12 @@ public class Personalizacaoitem {
         this.itempedido = itempedido;
     }
 
-    public String getAcao() {
-        return acao;
+    public Integer getQuantidade() {
+        return quantidade;
     }
 
-    public void setAcao(String acao) {
-        this.acao = acao;
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 
     public String getDetalhe() {
