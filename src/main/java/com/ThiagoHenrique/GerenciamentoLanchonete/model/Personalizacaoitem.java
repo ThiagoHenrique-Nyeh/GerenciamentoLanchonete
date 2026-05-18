@@ -22,6 +22,9 @@ public class Personalizacaoitem {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal preco_adicional;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal valorTotalAdicional;
+
     public Long getId() {
         return id;
     }
@@ -60,5 +63,13 @@ public class Personalizacaoitem {
 
     public void setPreco_adicional(BigDecimal preco_adicional) {
         this.preco_adicional = preco_adicional;
+    }
+
+    public BigDecimal getValorTotalAdicional() {
+        return valorTotalAdicional;
+    }
+
+    public void setValorTotalAdicional(BigDecimal valorTotalAdicional) {
+        this.valorTotalAdicional = valorTotalAdicional;
     }
 }
