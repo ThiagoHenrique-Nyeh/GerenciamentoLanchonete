@@ -41,6 +41,7 @@ public class PersonalizacaoitemService {
     }
 
 
+
     public Personalizacaoitem buscaId(Long id){
         return personalizacaoitemRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("PERSONALIZACAO DE ID:" + id + "NAO ENCONTRADA"));

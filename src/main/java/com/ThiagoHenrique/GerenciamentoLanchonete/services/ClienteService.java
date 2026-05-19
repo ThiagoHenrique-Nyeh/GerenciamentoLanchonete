@@ -18,8 +18,15 @@ public class ClienteService {
         if (cliente.getNome()==null || cliente.getNome().trim().isEmpty()){
             throw new RuntimeException("NOME NAO PODE SER VAZIO");
         }
+        if(cliente.getTelefone()==null || cliente.getTelefone().trim().isEmpty()){
+            throw new RuntimeException("TELEFONE NAO PODE SER VAZIO");
+        }
+        if(cliente.getEndereco()==null || cliente.getEndereco().trim().isEmpty()){
+            throw new RuntimeException("ENDERECO NAO PODE SER VAZIO");
+        }
         return clienteRepository.save(cliente);
     }
+
 
 
     public List<Cliente> listarTudo(){
@@ -27,10 +34,13 @@ public class ClienteService {
     }
 
 
+
+
     public Cliente buscaId(Long id){
        return clienteRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("CLIENTE DE ID:"+id+ "NAO FOI ENCONTRADO :( "));
     }
+
 
 
     public void deletar(Long id){
