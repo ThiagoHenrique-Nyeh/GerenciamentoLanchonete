@@ -22,7 +22,7 @@ public class Itempedido {
     @Column(nullable = false)
     private Integer quantidade;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valorunidade;
 
 
@@ -65,5 +65,9 @@ public class Itempedido {
 
     public void setValorunidade(BigDecimal valorunidade) {
         this.valorunidade = valorunidade;
+    }
+
+    public BigDecimal Prod() {
+        return null;
     }
 }

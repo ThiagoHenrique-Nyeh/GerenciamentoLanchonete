@@ -11,7 +11,9 @@ public class Pagamento {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal totalpagar;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal totalpagar_bruto;
+
 @OneToOne
 @JoinColumn (name = "pedido_id", nullable = true )
     private Pedido pedido;
@@ -22,7 +24,7 @@ public class Pagamento {
     @Column(nullable = false)
     private String status;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal troco;
 
     @Column(nullable = false)
@@ -34,8 +36,6 @@ public class Pagamento {
     @Column(nullable = false)
     private LocalDateTime dataHoraPedido;
 
-
-
     public Long getId() {
         return id;
     }
@@ -44,12 +44,12 @@ public class Pagamento {
         this.id = id;
     }
 
-    public BigDecimal getTotalpagar() {
-        return totalpagar;
+    public BigDecimal getTotalpagar_bruto() {
+        return totalpagar_bruto;
     }
 
-    public void setTotalpagar(BigDecimal totalpagar) {
-        this.totalpagar = totalpagar;
+    public void setTotalpagar_bruto(BigDecimal totalpagar_bruto) {
+        this.totalpagar_bruto = totalpagar_bruto;
     }
 
     public Pedido getPedido() {

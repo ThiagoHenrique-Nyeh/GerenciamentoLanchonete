@@ -19,7 +19,7 @@ public class Pedido {
     @Column(nullable = false)
     private LocalDateTime data_hora_pedido;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valorTotal;
 
     @Column(nullable = false)
