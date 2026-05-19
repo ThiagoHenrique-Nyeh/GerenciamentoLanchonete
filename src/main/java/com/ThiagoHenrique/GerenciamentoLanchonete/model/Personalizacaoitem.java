@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class Personalizacaoitem {
+public class Personalizacaoitem{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

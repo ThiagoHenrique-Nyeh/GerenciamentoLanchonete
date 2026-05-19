@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Pagamento {
+public class Pagamento{
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;

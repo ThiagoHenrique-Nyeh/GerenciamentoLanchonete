@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-public class Pedido {
+public class Pedido{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -78,5 +78,4 @@ public class Pedido {
     public void setStatusEntrega(String statusEntrega) {
         this.statusEntrega = statusEntrega;
     }
-
 }

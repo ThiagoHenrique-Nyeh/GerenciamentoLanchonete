@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class Itempedido {
+public class Itempedido{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
