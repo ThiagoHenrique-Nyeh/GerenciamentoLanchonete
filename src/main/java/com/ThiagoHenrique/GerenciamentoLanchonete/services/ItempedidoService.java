@@ -30,7 +30,7 @@ public class ItempedidoService {
             throw new RuntimeException("ITEM PRECISA ESTAR VINCULADO COM ALGUM PRODUTO");
         }
 
-        itempedido.setValorunidade(itempedido.getProduto().getPreco()); // VERIFICACAO DO PRECO UNITARIO DP PRODUTO
+        itempedido.setValorunidade(produtoRepository.findById(itempedido.getProduto().getId()).get().getPreco()); //VERIFICACAO DO PRECO UNITARIO DP PRODUTO
 
         if(itempedido.getValorunidade() == null){
             throw new RuntimeException("VALOR DA UNIDADE DO PRODUTO NAO PODE SER 0");
