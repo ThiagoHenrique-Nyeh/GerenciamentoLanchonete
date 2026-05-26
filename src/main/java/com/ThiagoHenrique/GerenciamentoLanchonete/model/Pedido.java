@@ -20,7 +20,7 @@ public class Pedido{
     private LocalDateTime data_hora_pedido;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal valorTotal;
+    private BigDecimal valorTotal= BigDecimal.ZERO;
 
     @Column(nullable = false)
     private String tipoEntrega;
