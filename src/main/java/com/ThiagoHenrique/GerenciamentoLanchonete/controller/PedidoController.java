@@ -36,6 +36,20 @@ public class PedidoController {
     }
 
 
+
+    @PutMapping("/{id}/iniciarEntrega")
+    public ResponseEntity<Pedido>iniciarEntrega(@PathVariable Long id){
+        return ResponseEntity.ok(pedidoService.iniciarEntrega(id));
+    }
+
+
+    @PutMapping("/{id}/concluir")
+    public ResponseEntity<Pedido>concluirPedido(@PathVariable Long id){
+       return ResponseEntity.ok(pedidoService.concluirPedido(id));
+    }
+
+
+
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id){
         pedidoService.deletar(id);

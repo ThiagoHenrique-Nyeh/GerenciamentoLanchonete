@@ -13,7 +13,7 @@ import java.util.List;
 public class PedidoService {
 
     @Autowired
-    PedidoRepository pedidoRepository;
+    private PedidoRepository pedidoRepository;
 
     public Pedido salvar(Pedido pedido){
         if( pedido.getValorTotal()== null){
@@ -21,7 +21,7 @@ public class PedidoService {
         }
 
          if (pedido.getStatusEntrega()==null){
-            pedido.setStatusEntrega("RECEBIDO");
+            pedido.setStatusEntrega("EM PREPARO");
         }
       pedido.setData_hora_pedido(LocalDateTime.now()); //<-Para salvar a data e hora automaticamente
 
@@ -39,6 +39,33 @@ public class PedidoService {
     public Pedido buscaId(Long id){
         return pedidoRepository.findById(id)
            .orElseThrow(() ->  new RuntimeException("Pedido com o id" + id + "NAO foi encontrado :("));
+    }
+
+
+
+    public Pedido iniciarEntrega(Long id){
+        Pedido pedido=buscaId(id);
+
+        if ("RETIRADA".equalsIgnoreCase(pedido.getTipoEntrega())) {
+            throw new RuntimeException("PEDIDO SERA RETIRADO NO LOCAL, NAO É POSSIVEL SAIR PARA ENTREGA");
+        }
+        if (!"EM PREPARO".equalsIgnoreCase(pedido.getStatusEntrega())){
+            throw new RuntimeException("PEDIDO PRECISA ESTAR EM PREPARO PARA SAIR PARA A ENTREGA");
+        }
+        pedido.setStatusEntrega("SAIU PARA ENTREGA");
+        return pedidoRepository.save(pedido);
+    }
+
+
+
+    public Pedido concluirPedido(Long id){
+        Pedido pedido = buscaId(id);
+
+        if (!"SAIU PARA ENTREGA".equalsIgnoreCase(pedido.getStatusEntrega()) && !"EM PREPARO".equalsIgnoreCase(pedido.getStatusEntrega())){
+            throw new RuntimeException("PEDIDO PRECISA ESTAR EM PREPARO OU TER SAIDO PARA ENTREGA PARA SER CONCLUIDO");
+        }
+        pedido.setStatusEntrega("CONCLUIDO");
+        return pedidoRepository.save(pedido);
     }
 
 
