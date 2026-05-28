@@ -49,7 +49,6 @@ public class PedidoController {
     }
 
 
-
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id){
         pedidoService.deletar(id);

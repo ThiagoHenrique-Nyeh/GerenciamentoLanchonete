@@ -50,7 +50,7 @@ public class PedidoService {
             throw new RuntimeException("PEDIDO SERA RETIRADO NO LOCAL, NAO É POSSIVEL SAIR PARA ENTREGA");
         }
         if (!"EM PREPARO".equalsIgnoreCase(pedido.getStatusEntrega())){
-            throw new RuntimeException("PEDIDO PRECISA ESTAR EM PREPARO PARA SAIR PARA A ENTREGA");
+            throw new RuntimeException("PEDIDO PRECISA ESTAR EM PREPARO PARA SAIR PARA A ENTREGA" );
         }
         pedido.setStatusEntrega("SAIU PARA ENTREGA");
         return pedidoRepository.save(pedido);
