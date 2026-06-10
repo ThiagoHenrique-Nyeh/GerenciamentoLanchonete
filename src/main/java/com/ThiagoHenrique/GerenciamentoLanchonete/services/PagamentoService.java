@@ -27,8 +27,14 @@ public class PagamentoService {
             throw new RuntimeException("TIPO DO PAGAMENTO É OBRIGÁTORIO");
         }
 
+        if (pagamento.getStatus() == null || pagamento.getStatus().trim().isEmpty()) {
+            pagamento.setStatus("PENDENTE");
+        }
+
         pagamento.setPedido(pedidoRepository.findById(pagamento.getPedido().getId()) //faz uma busca por id para encontrar o pedido
                 .orElseThrow(()-> new RuntimeException("PEDIDO NAO FOI ENCONTRADO NO BANCO DE DADOS :(")));
+        pagamento.setDataHoraPedido(pagamento.getPedido().getData_hora_pedido());
+
 
         if (pagamento.getPedido().getValorTotal() == null){
             throw new RuntimeException("PEDIDO NAO POSSUI UM VALOR TOTAL NO MOMENTO");

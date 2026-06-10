@@ -1,5 +1,6 @@
 package com.ThiagoHenrique.GerenciamentoLanchonete.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ public class Itempedido{
 
     @ManyToOne
     @JoinColumn (name = "pedido_id", nullable = false)
+    @JsonIgnore
     private Pedido pedido;
 
     @ManyToOne

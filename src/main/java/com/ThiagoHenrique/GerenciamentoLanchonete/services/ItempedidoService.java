@@ -8,6 +8,7 @@ import com.ThiagoHenrique.GerenciamentoLanchonete.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -19,6 +20,9 @@ public class ItempedidoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private PedidoRepository pedidoRepository;
 
 
     public Itempedido salvar(Itempedido itempedido){
@@ -35,6 +39,15 @@ public class ItempedidoService {
         if(itempedido.getValorunidade() == null){
             throw new RuntimeException("VALOR DA UNIDADE DO PRODUTO NAO PODE SER 0");
         }
+
+        Pedido pedido = pedidoRepository.findById(itempedido.getPedido().getId())
+                .orElseThrow(()-> new RuntimeException("PEDIDO NAO ENCONTRADO"));
+
+        pedido.setValorTotal(pedido.getValorTotal().add(
+                itempedido.getValorunidade().multiply(new BigDecimal(itempedido.getQuantidade())))
+        );
+        pedidoRepository.save(pedido);
+
         return itempedidoRepository.save(itempedido);
     }
 

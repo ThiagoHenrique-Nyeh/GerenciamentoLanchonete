@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Pedido{
@@ -14,7 +15,7 @@ public class Pedido{
 
     @ManyToOne
     @JoinColumn (name = "cliente_id", nullable = false)
-    Cliente cliente;
+    private Cliente cliente;
 
     @Column(nullable = false)
     private LocalDateTime data_hora_pedido;
@@ -28,6 +29,8 @@ public class Pedido{
     @Column(nullable = false)
     private String statusEntrega;
 
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Itempedido> itempedido;
 
 
 
@@ -77,5 +80,13 @@ public class Pedido{
 
     public void setStatusEntrega(String statusEntrega) {
         this.statusEntrega = statusEntrega;
+    }
+
+    public List<Itempedido> getItempedido() {
+        return itempedido;
+    }
+
+    public void setItempedido(List<Itempedido> itempedido) {
+        this.itempedido = itempedido;
     }
 }

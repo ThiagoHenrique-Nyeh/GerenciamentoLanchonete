@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pedido")
+@CrossOrigin(origins = "http://localhost:5173")
 
 public class PedidoController {
 

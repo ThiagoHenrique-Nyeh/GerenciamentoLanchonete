@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/personalizacaoitem")
+@CrossOrigin(origins = "http://localhost:5173")
 
 public class PersonalizacaoitemController {
 
