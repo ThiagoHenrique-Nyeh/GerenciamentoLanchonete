@@ -24,34 +24,34 @@ public class PedidoService {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private ClienteRepository clienteRepository; // ➕ Injetado para salvar o cliente antes do pedido
+    private ClienteRepository clienteRepository;
 
-
-    @Transactional // Garantia de que se algo falhar, não salva nada pela metade
+    @Transactional
     public Pedido salvar(Pedido pedido){
-        // 1. Ajusta o status inicial para bater com o monitoramento do Front-end
         if (pedido.getStatusEntrega() == null){
             pedido.setStatusEntrega("PENDENTE");
         }
 
         pedido.setData_hora_pedido(LocalDateTime.now());
 
-        // 2. CORREÇÃO DO ERRO 500: Salva o cliente primeiro para gerar um ID válido no banco
         if (pedido.getCliente() != null) {
             Cliente clienteSalvo = clienteRepository.save(pedido.getCliente());
-            pedido.setCliente(clienteSalvo); // Vincula o cliente persistido de volta ao pedido
+            pedido.setCliente(clienteSalvo);
         } else {
             throw new RuntimeException("Não é possível salvar um pedido sem um cliente vinculado.");
         }
 
-        // 3. Calcula o valor total e amarra os itens
         pedido.setValorTotal(BigDecimal.ZERO);
         if (pedido.getItempedido() != null){
             for(Itempedido itempedido : pedido.getItempedido()){
                 itempedido.setPedido(pedido);
 
-                itempedido.setValorunidade(produtoRepository.findById(itempedido.getProduto().getId())
-                        .orElseThrow(()-> new RuntimeException("PRODUTO NAO ENCONTRADO :(")).getPreco());
+                BigDecimal precoDoBanco = produtoRepository.findById(itempedido.getProduto().getId())
+                        .orElseThrow(()-> new RuntimeException("PRODUTO NAO ENCONTRADO :(")).getPreco();
+
+                if (itempedido.getValorunidade() == null || itempedido.getValorunidade().compareTo(precoDoBanco) < 0) {
+                    itempedido.setValorunidade(precoDoBanco);
+                }
 
                 pedido.setValorTotal(pedido.getValorTotal()
                         .add(itempedido.getValorunidade()
@@ -68,7 +68,7 @@ public class PedidoService {
 
     public Pedido buscaId(Long id){
         return pedidoRepository.findById(id)
-                .orElseThrow(() ->  new RuntimeException("Pedido com o id " + id + " NÃO foi encontrado :("));
+                .orElseThrow(() -> new RuntimeException("Pedido com o id " + id + " NÃO foi encontrado :("));
     }
 
     public Pedido iniciarEntrega(Long id){
@@ -77,9 +77,8 @@ public class PedidoService {
         if ("RETIRADA".equalsIgnoreCase(pedido.getTipoEntrega())) {
             throw new RuntimeException("PEDIDO SERÁ RETIRADO NO LOCAL, NÃO É POSSÍVEL SAIR PARA ENTREGA");
         }
-        // Ajustado para aceitar PENDENTE ou EM PREPARO
         if (!"PENDENTE".equalsIgnoreCase(pedido.getStatusEntrega()) && !"EM PREPARO".equalsIgnoreCase(pedido.getStatusEntrega())){
-            throw new RuntimeException("PEDIDO PRECISA ESTAR PENDENTE OU EM PREPARO PARA SAIR PARA A ENTREGA" );
+            throw new RuntimeException("PEDIDO PRECISA ESTAR PENDENTE OU EM PREPARO PARA SAIR PARA A ENTREGA");
         }
         pedido.setStatusEntrega("SAIU PARA ENTREGA");
         return pedidoRepository.save(pedido);
@@ -97,7 +96,7 @@ public class PedidoService {
         return pedidoRepository.save(pedido);
     }
 
-    public void deletar (Long id){
+    public void deletar(Long id){
         Pedido pedido = buscaId(id);
         pedidoRepository.delete(pedido);
     }
