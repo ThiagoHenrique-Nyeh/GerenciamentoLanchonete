@@ -34,6 +34,10 @@ public class PedidoService {
 
         pedido.setData_hora_pedido(LocalDateTime.now());
 
+        if (pedido.getTaxaEntrega() == null) {
+            pedido.setTaxaEntrega(BigDecimal.ZERO);
+        }
+
         if (pedido.getCliente() != null) {
             Cliente clienteSalvo = clienteRepository.save(pedido.getCliente());
             pedido.setCliente(clienteSalvo);
@@ -41,7 +45,7 @@ public class PedidoService {
             throw new RuntimeException("Não é possível salvar um pedido sem um cliente vinculado.");
         }
 
-        pedido.setValorTotal(BigDecimal.ZERO);
+        BigDecimal totalItens = BigDecimal.ZERO;
         if (pedido.getItempedido() != null){
             for(Itempedido itempedido : pedido.getItempedido()){
                 itempedido.setPedido(pedido);
@@ -53,11 +57,13 @@ public class PedidoService {
                     itempedido.setValorunidade(precoDoBanco);
                 }
 
-                pedido.setValorTotal(pedido.getValorTotal()
-                        .add(itempedido.getValorunidade()
-                                .multiply(BigDecimal.valueOf(itempedido.getQuantidade()))));
+                totalItens = totalItens.add(
+                        itempedido.getValorunidade().multiply(BigDecimal.valueOf(itempedido.getQuantidade()))
+                );
             }
         }
+
+        pedido.setValorTotal(totalItens.add(pedido.getTaxaEntrega()));
 
         return pedidoRepository.save(pedido);
     }

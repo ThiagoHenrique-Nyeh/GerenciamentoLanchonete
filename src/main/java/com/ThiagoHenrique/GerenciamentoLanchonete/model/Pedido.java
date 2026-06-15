@@ -1,6 +1,6 @@
 package com.ThiagoHenrique.GerenciamentoLanchonete.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -23,6 +23,9 @@ public class Pedido{
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valorTotal= BigDecimal.ZERO;
 
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal taxaEntrega = BigDecimal.ZERO;
+
     @Column(nullable = false)
     private String tipoEntrega;
 
@@ -31,6 +34,10 @@ public class Pedido{
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Itempedido> itempedido;
+
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("pedido")
+    private Pagamento pagamento;
 
 
 
@@ -66,6 +73,14 @@ public class Pedido{
         this.valorTotal = valorTotal;
     }
 
+    public BigDecimal getTaxaEntrega() {
+        return taxaEntrega;
+    }
+
+    public void setTaxaEntrega(BigDecimal taxaEntrega) {
+        this.taxaEntrega = taxaEntrega;
+    }
+
     public String getTipoEntrega() {
         return tipoEntrega;
     }
@@ -88,5 +103,13 @@ public class Pedido{
 
     public void setItempedido(List<Itempedido> itempedido) {
         this.itempedido = itempedido;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
     }
 }
